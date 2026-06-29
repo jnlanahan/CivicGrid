@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Hanken+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400..600&family=Spline+Sans:wght@400..600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#CFC8BC;-webkit-font-smoothing:antialiased}
+@keyframes cg-pulse{0%{opacity:.55;transform:scale(.85)}100%{opacity:0;transform:scale(2.4)}}
+@keyframes cg-blink{0%,100%{opacity:1}50%{opacity:.25}}
+</style>
+</helmet>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
+<symbol id="i-fire" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+<symbol id="i-ems" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M12 9v6M9 12h6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4M12 17h.01"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84z"/><path d="m6.08 9.5-3.49 1.59a1 1 0 0 0 0 1.81l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9a1 1 0 0 0 0-1.83l-3.49-1.59"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51 8.59 10.49"/></symbol>
+<symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-chev-d" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-chev-r" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+<symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+<symbol id="i-radio" viewBox="0 0 24 24"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5M19.1 4.9C23 8.8 23 15.1 19.1 19"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0z"/><circle cx="12" cy="12" r="3"/></symbol>
+</defs>
+</svg>
+
+<!-- ============ FRAME A : DIRECTION A — WARM CIVIC ============ -->
+<div style="position:absolute;left:0;top:80px;width:1480px">
+<div data-drags-parent="1" style="display:flex;align-items:center;gap:10px;margin:0 0 16px 6px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.04em;color:#5b5346;font-weight:500">
+<span style="width:9px;height:9px;border-radius:50%;background:#E8833A"></span>DIRECTION A · &ldquo;WARM CIVIC&rdquo; — Live Map + Floating Event Detail
+</div>
+<div style="background:#fff;border-radius:14px;box-shadow:0 24px 60px rgba(40,30,18,.20);overflow:hidden">
+<!-- browser chrome -->
+<div style="display:flex;align-items:center;gap:14px;padding:11px 16px;background:#EFEBE4;border-bottom:1px solid #E2DCD1">
+<div style="display:flex;gap:8px"><span style="width:12px;height:12px;border-radius:50%;background:#F0655B"></span><span style="width:12px;height:12px;border-radius:50%;background:#F4BE4F"></span><span style="width:12px;height:12px;border-radius:50%;background:#5CC15F"></span></div>
+<div style="flex:1;max-width:420px;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #E2DCD1;border-radius:8px;padding:6px 12px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:#9a9082"><svg width="13" height="13" fill="none" stroke="#b6ac9c" stroke-width="2.2"><use href="#i-pin"/></svg>civicgrid.com/columbus</div>
+<div style="flex:1"></div>
+</div>
+<!-- app shell -->
+<div style="background:#F6F1E9;font-family:'Hanken Grotesk',sans-serif">
+<!-- app header -->
+<div style="display:flex;align-items:center;gap:24px;padding:16px 26px;border-bottom:1px solid #EBE3D6">
+<div style="display:flex;align-items:center;gap:11px"><svg width="26" height="26" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-grid"/></svg><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:21px;color:#2A2419;letter-spacing:-.01em">CivicGrid</span></div>
+<div style="flex:1;display:flex;align-items:center;gap:10px;max-width:560px;background:#fff;border:1px solid #E8E0D2;border-radius:11px;padding:11px 16px;box-shadow:0 1px 2px rgba(0,0,0,.02)"><svg width="17" height="17" fill="none" stroke="#B6AC9C" stroke-width="2"><use href="#i-search"/></svg><span style="color:#a89e8d;font-size:15px">Search Columbus events, neighborhoods, addresses…</span></div>
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:#fff;border:1px solid #E8E0D2;border-radius:10px;font-size:14px;color:#5b5346;font-weight:500"><svg width="16" height="16" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-user"/></svg>Account<svg width="14" height="14" fill="none" stroke="#b6ac9c" stroke-width="2"><use href="#i-chev-d"/></svg></div>
+</div>
+<!-- filter bar -->
+<div style="display:flex;align-items:center;gap:12px;padding:14px 26px;border-bottom:1px solid #EBE3D6">
+<span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a89e8d;margin-right:4px">Filters</span>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:#2A2419;color:#fff;border-radius:9px;font-size:13.5px;font-weight:600"><svg width="15" height="15" fill="none" stroke="#fff" stroke-width="2"><use href="#i-layers"/></svg>All events</div>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:#fff;border:1px solid #E8E0D2;color:#5b5346;border-radius:9px;font-size:13.5px;font-weight:500"><svg width="15" height="15" fill="none" stroke="#C9503E" stroke-width="2"><use href="#i-share"/></svg>Major incidents</div>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:#fff;border:1px solid #E8E0D2;color:#5b5346;border-radius:9px;font-size:13.5px;font-weight:500"><svg width="15" height="15" fill="none" stroke="#C9503E" stroke-width="2"><use href="#i-shield"/></svg>Police</div>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:#fff;border:1px solid #E8E0D2;color:#5b5346;border-radius:9px;font-size:13.5px;font-weight:500"><svg width="15" height="15" fill="none" stroke="#D9534F" stroke-width="2"><use href="#i-fire"/></svg>Fire</div>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:#fff;border:1px solid #E8E0D2;color:#5b5346;border-radius:9px;font-size:13.5px;font-weight:500"><svg width="15" height="15" fill="none" stroke="#3E7CB1" stroke-width="2"><use href="#i-ems"/></svg>EMS</div>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:#fff;border:1px solid #E8E0D2;color:#5b5346;border-radius:9px;font-size:13.5px;font-weight:500"><svg width="15" height="15" fill="none" stroke="#E0A526" stroke-width="2"><use href="#i-alert"/></svg>Hazards</div>
+<div style="flex:1"></div>
+<div style="display:flex;align-items:center;gap:7px;font-size:13px;color:#7a7060"><span style="width:8px;height:8px;border-radius:50%;background:#5CC15F;box-shadow:0 0 0 4px rgba(92,193,95,.18)"></span><span style="font-family:'JetBrains Mono',monospace;font-weight:500">LIVE</span>· updated 12s ago</div>
+</div>
+<!-- main grid -->
+<div style="display:grid;grid-template-columns:1fr 350px;height:660px">
+<!-- MAP AREA -->
+<div style="position:relative;overflow:hidden;background:#ECE6DB">
+<div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 43px,#FBFAF6 43px 45px),repeating-linear-gradient(90deg,transparent 0 54px,#FBFAF6 54px 56px);opacity:.85"></div>
+<div style="position:absolute;inset:0;background-image:repeating-linear-gradient(35deg,transparent 0 120px,#FBFAF6 120px 123px);opacity:.5"></div>
+<!-- parks -->
+<div style="position:absolute;left:60px;top:80px;width:150px;height:120px;background:#D9E4CB;border-radius:46% 54% 60% 40%/50% 44% 56% 50%;opacity:.85"></div>
+<div style="position:absolute;right:120px;bottom:70px;width:170px;height:110px;background:#D9E4CB;border-radius:54% 46% 40% 60%/56% 50% 50% 44%;opacity:.8"></div>
+<!-- river -->
+<div style="position:absolute;left:34%;top:-40px;width:42px;height:780px;background:#C7D8E6;transform:rotate(14deg);border-radius:30px;opacity:.85"></div>
+<!-- highways -->
+<div style="position:absolute;left:-40px;top:300px;width:1000px;height:11px;background:#F2B27C;transform:rotate(-7deg);border-radius:6px"></div>
+<div style="position:absolute;left:300px;top:-60px;width:11px;height:900px;background:#F2B27C;transform:rotate(9deg);border-radius:6px"></div>
+<div style="position:absolute;right:-60px;top:120px;width:600px;height:9px;background:#F4C79B;transform:rotate(24deg);border-radius:6px"></div>
+<!-- area labels -->
+<div style="position:absolute;left:90px;top:60px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:#9a8f7c;text-transform:uppercase">Short North</div>
+<div style="position:absolute;right:120px;top:90px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:#9a8f7c;text-transform:uppercase">Italian Village</div>
+<div style="position:absolute;right:150px;bottom:120px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:#9a8f7c;text-transform:uppercase">German Village</div>
+<div style="position:absolute;left:38%;top:48%;transform:translate(-50%,-50%);font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:34px;color:#B7AD98;letter-spacing:.01em">Columbus</div>
+<!-- zoom controls -->
+<div style="position:absolute;right:18px;top:18px;display:flex;flex-direction:column;background:#fff;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.12);overflow:hidden"><div style="padding:9px;border-bottom:1px solid #eee"><svg width="16" height="16" fill="none" stroke="#5b5346" stroke-width="2"><use href="#i-plus"/></svg></div><div style="padding:9px"><svg width="16" height="16" fill="none" stroke="#5b5346" stroke-width="2"><use href="#i-minus"/></svg></div></div>
+<!-- PINS -->
+<div style="position:absolute;left:24%;top:30%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:3">
+<div style="position:relative"><span style="position:absolute;inset:0;border-radius:50%;border:3px solid #E8833A;animation:cg-pulse 2.2s ease-out infinite"></span><div style="width:52px;height:52px;border-radius:50%;background:#fff;border:3px solid #E8833A;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(232,131,58,.35)"><svg width="26" height="26" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-car"/></svg></div></div>
+<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#B5791A;background:#fff;padding:2px 7px;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,.12)">REPORTED</span>
+</div>
+<div style="position:absolute;left:48%;top:24%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2">
+<div style="width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid #D9534F;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.18)"><svg width="23" height="23" fill="none" stroke="#D9534F" stroke-width="2"><use href="#i-fire"/></svg></div>
+<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#356C9B;background:#fff;padding:2px 7px;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,.12)">CORROBORATED</span>
+</div>
+<div style="position:absolute;left:62%;top:46%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2">
+<div style="width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid #3E7CB1;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.18)"><svg width="23" height="23" fill="none" stroke="#3E7CB1" stroke-width="2"><use href="#i-ems"/></svg></div>
+<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#B5791A;background:#fff;padding:2px 7px;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,.12)">REPORTED</span>
+</div>
+<div style="position:absolute;left:30%;top:62%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2">
+<div style="width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid #C9503E;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.18)"><svg width="23" height="23" fill="none" stroke="#C9503E" stroke-width="2"><use href="#i-shield"/></svg></div>
+<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#B5791A;background:#fff;padding:2px 7px;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,.12)">REPORTED</span>
+</div>
+<div style="position:absolute;left:78%;top:32%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2">
+<div style="width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid #E0A526;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.18)"><svg width="23" height="23" fill="none" stroke="#E0A526" stroke-width="2"><use href="#i-alert"/></svg></div>
+<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#356C9B;background:#fff;padding:2px 7px;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,.12)">CORROBORATED</span>
+</div>
+<div style="position:absolute;left:52%;top:74%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2;opacity:.7">
+<div style="width:40px;height:40px;border-radius:50%;background:#fff;border:3px solid #7B8794;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.14)"><svg width="20" height="20" fill="none" stroke="#7B8794" stroke-width="2"><use href="#i-car"/></svg></div>
+<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#6B7682;background:#fff;padding:2px 7px;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,.12)">RESOLVED</span>
+</div>
+<!-- FLOATING EVENT DETAIL CARD -->
+<div style="position:absolute;left:24px;bottom:24px;width:392px;background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(30,20,10,.24);overflow:hidden;z-index:5">
+<div style="height:5px;background:#E8833A"></div>
+<div style="padding:20px 22px">
+<div style="display:flex;align-items:flex-start;gap:14px">
+<div style="width:50px;height:50px;border-radius:13px;background:#FBEAD9;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="27" height="27" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-car"/></svg></div>
+<div style="flex:1">
+<div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:20px;color:#2A2419;line-height:1.15;letter-spacing:-.01em">Possible Vehicle Collision</div>
+<div style="font-size:13.5px;color:#8a8070;margin-top:3px;display:flex;align-items:center;gap:5px"><svg width="13" height="13" fill="none" stroke="#b0a594" stroke-width="2"><use href="#i-pin"/></svg>I-71 North near 17th Ave</div>
+</div>
+<svg width="18" height="18" fill="none" stroke="#c4baa8" stroke-width="2"><use href="#i-x"/></svg>
+</div>
+<div style="display:flex;align-items:center;gap:10px;margin-top:14px">
+<span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#B5791A;background:#F4EAD2;padding:5px 11px;border-radius:7px"><span style="width:7px;height:7px;border-radius:50%;background:#B5791A"></span>Reported</span>
+<span style="font-size:12.5px;color:#8a8070;font-family:'JetBrains Mono',monospace">1 source · 4 min ago</span>
+</div>
+<!-- confidence row -->
+<div style="display:flex;align-items:center;gap:16px;margin-top:18px;padding:14px 16px;background:#FAF6EF;border-radius:12px;border:1px solid #EFE7D8">
+<svg viewBox="0 0 100 64" style="width:88px;height:auto;overflow:visible;flex-shrink:0"><path d="M10 52 A40 40 0 0 1 90 52" fill="none" stroke="#EBE0CC" stroke-width="9" stroke-linecap="round"/><path d="M10 52 A40 40 0 0 1 90 52" fill="none" stroke="#E8833A" stroke-width="9" stroke-linecap="round" stroke-dasharray="101.8 1000"/><text x="50" y="48" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="600" font-size="22" fill="#2A2419">81%</text></svg>
+<div style="flex:1">
+<div style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#a89e8d;font-family:'JetBrains Mono',monospace">Confidence</div>
+<div style="font-size:13.5px;color:#5b5346;line-height:1.45;margin-top:4px">Scanner signals suggest a possible multi-vehicle collision. This is an <strong style="color:#2A2419">unverified estimate.</strong></div>
+</div>
+</div>
+<!-- sparkline -->
+<div style="display:flex;align-items:center;gap:10px;margin-top:14px">
+<span style="font-size:11px;color:#a89e8d;font-family:'JetBrains Mono',monospace">SIGNAL</span>
+<svg viewBox="0 0 200 28" preserveAspectRatio="none" style="flex:1;height:24px"><polyline points="0,22 18,18 36,20 54,11 72,15 90,8 108,13 126,6 144,12 162,5 180,9 200,4" fill="none" stroke="#E8833A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span style="font-size:11px;color:#5CC15F;font-family:'JetBrains Mono',monospace;font-weight:600">↑ rising</span>
+</div>
+<div style="display:flex;gap:10px;margin-top:18px">
+<button style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px;background:#2A2419;color:#fff;border:none;border-radius:10px;font-family:'Hanken Grotesk',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer"><svg width="15" height="15" fill="none" stroke="#fff" stroke-width="2"><use href="#i-clock"/></svg>Show timeline</button>
+<button style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px;background:#fff;color:#5b5346;border:1px solid #E2DACB;border-radius:10px;font-family:'Hanken Grotesk',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer"><svg width="15" height="15" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-info"/></svg>Confidence explained</button>
+</div>
+</div>
+</div>
+<div style="position:absolute;left:18px;bottom:18px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#b0a594;z-index:1">© Mapbox · OpenStreetMap</div>
+</div>
+<!-- INTELLIGENCE FEED RAIL -->
+<div style="border-left:1px solid #EBE3D6;background:#FBF8F2;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px 12px">
+<div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:16px;color:#2A2419">Event Intelligence</div><div style="font-size:11.5px;color:#a89e8d;font-family:'JetBrains Mono',monospace;margin-top:2px">6 active · Columbus</div></div>
+<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#7a7060;background:#fff;border:1px solid #E8E0D2;padding:5px 9px;border-radius:7px"><svg width="12" height="12" fill="none" stroke="#7a7060" stroke-width="2"><use href="#i-radio"/></svg>Newest</div>
+</div>
+<div style="flex:1;overflow:hidden;padding:0 14px 14px;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ events }}" as="ev" hint-placeholder-count="5">
+<div style="background:#fff;border:1px solid #EEE6D8;border-radius:13px;padding:13px 14px;box-shadow:0 1px 2px rgba(0,0,0,.02)">
+<div style="display:flex;align-items:flex-start;gap:11px">
+<div style="width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ ev.tint }}"><svg width="20" height="20" fill="none" stroke="{{ ev.color }}" stroke-width="2"><use href="{{ ev.iconHref }}"/></svg></div>
+<div style="flex:1;min-width:0">
+<div style="font-weight:600;font-size:14.5px;color:#2A2419;line-height:1.2">{{ ev.title }}</div>
+<div style="font-size:12px;color:#8a8070;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ ev.loc }}</div>
+</div>
+<svg viewBox="0 0 100 64" style="width:52px;height:auto;overflow:visible;flex-shrink:0"><path d="M10 52 A40 40 0 0 1 90 52" fill="none" stroke="#EFE7D8" stroke-width="11" stroke-linecap="round"/><path d="M10 52 A40 40 0 0 1 90 52" fill="none" stroke="{{ ev.color }}" stroke-width="11" stroke-linecap="round" stroke-dasharray="{{ ev.dash }}"/><text x="50" y="49" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="600" font-size="24" fill="#2A2419">{{ ev.pct }}</text></svg>
+</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:10px">
+<span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;color:{{ ev.statusC }};background:{{ ev.statusBg }}"><span style="width:6px;height:6px;border-radius:50%;background:{{ ev.statusC }}"></span>{{ ev.statusLabel }}</span>
+<span style="flex:1"></span>
+<svg viewBox="0 0 120 18" preserveAspectRatio="none" style="width:62px;height:16px"><polyline points="{{ ev.spark }}" fill="none" stroke="{{ ev.color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/></svg>
+<span style="font-size:11px;color:#a89e8d;font-family:'JetBrains Mono',monospace">{{ ev.ago }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============ FRAME B : DIRECTION B — SIGNAL ROOM ============ -->
+<div style="position:absolute;left:1620px;top:80px;width:1480px">
+<div data-drags-parent="1" style="display:flex;align-items:center;gap:10px;margin:0 0 16px 6px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.04em;color:#5b5346;font-weight:500">
+<span style="width:9px;height:9px;border-radius:50%;background:#2F6BD6"></span>DIRECTION B · &ldquo;SIGNAL ROOM&rdquo; — Live Ticker · Map · Event Dossier
+</div>
+<div style="background:#fff;border-radius:14px;box-shadow:0 24px 60px rgba(20,24,32,.22);overflow:hidden">
+<!-- browser chrome -->
+<div style="display:flex;align-items:center;gap:14px;padding:11px 16px;background:#1B2230;border-bottom:1px solid #0F1521">
+<div style="display:flex;gap:8px"><span style="width:12px;height:12px;border-radius:50%;background:#F0655B"></span><span style="width:12px;height:12px;border-radius:50%;background:#F4BE4F"></span><span style="width:12px;height:12px;border-radius:50%;background:#5CC15F"></span></div>
+<div style="flex:1;max-width:420px;display:flex;align-items:center;gap:8px;background:#0F1521;border:1px solid #2A3346;border-radius:8px;padding:6px 12px;font-family:'Spline Sans',sans-serif;font-size:13px;color:#7d879b"><svg width="13" height="13" fill="none" stroke="#5b677d" stroke-width="2.2"><use href="#i-pin"/></svg>civicgrid.com/columbus</div>
+<div style="flex:1"></div>
+</div>
+<!-- app shell -->
+<div style="background:#F2F4F7;font-family:'Spline Sans',sans-serif">
+<!-- app header -->
+<div style="display:flex;align-items:center;gap:24px;padding:15px 24px;background:#fff;border-bottom:1px solid #E6E9EF">
+<div style="display:flex;align-items:center;gap:11px"><svg width="25" height="25" fill="none" stroke="#2F6BD6" stroke-width="2"><use href="#i-grid"/></svg><span style="font-family:'Spline Sans',sans-serif;font-weight:600;font-size:20px;color:#14181F;letter-spacing:-.01em">CivicGrid</span><span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;color:#8A93A5;border:1px solid #E0E4EB;padding:2px 6px;border-radius:5px;margin-left:2px">COLUMBUS</span></div>
+<div style="flex:1;display:flex;align-items:center;gap:10px;max-width:520px;background:#F2F4F7;border:1px solid #E6E9EF;border-radius:9px;padding:10px 14px"><svg width="16" height="16" fill="none" stroke="#9AA3B2" stroke-width="2"><use href="#i-search"/></svg><span style="color:#9AA3B2;font-size:14px">Search events, neighborhoods, addresses…</span></div>
+<div style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5b677d"><span style="width:8px;height:8px;border-radius:50%;background:#2FA968;box-shadow:0 0 0 4px rgba(47,169,104,.16);animation:cg-blink 2s infinite"></span>LIVE FEED</div>
+<div style="width:34px;height:34px;border-radius:9px;background:#EAEEF4;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" fill="none" stroke="#5b677d" stroke-width="2"><use href="#i-user"/></svg></div>
+</div>
+<!-- 3 column -->
+<div style="display:grid;grid-template-columns:316px 1fr 388px;height:704px">
+<!-- LEFT: filters + live ticker -->
+<div style="background:#fff;border-right:1px solid #E6E9EF;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 18px 12px;border-bottom:1px solid #EEF1F5">
+<div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#8A93A5;text-transform:uppercase;margin-bottom:10px">Filter feed</div>
+<div style="display:flex;flex-wrap:wrap;gap:7px">
+<span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:#fff;background:#14181F;padding:6px 11px;border-radius:7px"><svg width="13" height="13" fill="none" stroke="#fff" stroke-width="2"><use href="#i-layers"/></svg>All</span>
+<span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:#48515F;background:#F2F4F7;border:1px solid #E6E9EF;padding:6px 11px;border-radius:7px">Major only</span>
+<span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:#48515F;background:#F2F4F7;border:1px solid #E6E9EF;padding:6px 11px;border-radius:7px"><span style="width:8px;height:8px;border-radius:2px;background:#C9503E"></span>Police</span>
+<span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:#48515F;background:#F2F4F7;border:1px solid #E6E9EF;padding:6px 11px;border-radius:7px"><span style="width:8px;height:8px;border-radius:2px;background:#D9534F"></span>Fire</span>
+<span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:#48515F;background:#F2F4F7;border:1px solid #E6E9EF;padding:6px 11px;border-radius:7px"><span style="width:8px;height:8px;border-radius:2px;background:#3E7CB1"></span>EMS</span>
+</div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:13px 18px 8px"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#8A93A5;text-transform:uppercase">Live events · 6</span><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#2FA968">▲ updated 12s</span></div>
+<div style="flex:1;overflow:hidden;padding:0 12px 12px;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ events }}" as="ev" hint-placeholder-count="6">
+<div style="background:#fff;border:1px solid #EAEDF2;border-left:3px solid {{ ev.color }};border-radius:9px;padding:11px 12px">
+<div style="display:flex;align-items:center;gap:9px">
+<svg width="17" height="17" fill="none" stroke="{{ ev.color }}" stroke-width="2" style="flex-shrink:0"><use href="{{ ev.iconHref }}"/></svg>
+<div style="flex:1;min-width:0;font-family:'Newsreader',serif;font-weight:500;font-size:15px;color:#14181F;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ ev.title }}</div>
+<span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#14181F">{{ ev.pct }}</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:7px;padding-left:26px">
+<span style="font-size:11.5px;font-weight:600;color:{{ ev.statusC }}">{{ ev.statusLabel }}</span>
+<span style="width:3px;height:3px;border-radius:50%;background:#C4CBD6"></span>
+<span style="font-size:11.5px;color:#8A93A5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ ev.loc }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+<!-- CENTER: map -->
+<div style="position:relative;overflow:hidden;background:#E4E8EE">
+<div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 46px,#F4F6F9 46px 48px),repeating-linear-gradient(90deg,transparent 0 58px,#F4F6F9 58px 60px);opacity:.9"></div>
+<div style="position:absolute;inset:0;background-image:repeating-linear-gradient(38deg,transparent 0 130px,#F4F6F9 130px 133px);opacity:.55"></div>
+<div style="position:absolute;left:70px;top:90px;width:150px;height:120px;background:#D6E2D6;border-radius:46% 54% 60% 40%/50% 44% 56% 50%;opacity:.8"></div>
+<div style="position:absolute;right:90px;bottom:90px;width:170px;height:110px;background:#D6E2D6;border-radius:54% 46% 40% 60%/56% 50% 50% 44%;opacity:.75"></div>
+<div style="position:absolute;left:36%;top:-40px;width:40px;height:840px;background:#BFD2E2;transform:rotate(13deg);border-radius:30px;opacity:.85"></div>
+<div style="position:absolute;left:-40px;top:330px;width:1000px;height:9px;background:#C6CFDA;transform:rotate(-7deg);border-radius:6px"></div>
+<div style="position:absolute;left:320px;top:-60px;width:9px;height:960px;background:#C6CFDA;transform:rotate(9deg);border-radius:6px"></div>
+<div style="position:absolute;left:38%;top:46%;transform:translate(-50%,-50%);font-family:'Newsreader',serif;font-weight:500;font-size:38px;color:#A9B4C2;letter-spacing:.01em">Columbus</div>
+<div style="position:absolute;left:96px;top:64px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:#94a0b0;text-transform:uppercase">Short North</div>
+<div style="position:absolute;right:120px;bottom:130px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:#94a0b0;text-transform:uppercase">German Village</div>
+<div style="position:absolute;right:16px;top:16px;display:flex;flex-direction:column;background:#fff;border-radius:8px;box-shadow:0 4px 12px rgba(20,24,32,.14);overflow:hidden"><div style="padding:8px;border-bottom:1px solid #eee"><svg width="15" height="15" fill="none" stroke="#48515F" stroke-width="2"><use href="#i-plus"/></svg></div><div style="padding:8px"><svg width="15" height="15" fill="none" stroke="#48515F" stroke-width="2"><use href="#i-minus"/></svg></div></div>
+<!-- pins (square marker style) -->
+<div style="position:absolute;left:25%;top:32%;transform:translate(-50%,-100%);z-index:3;display:flex;flex-direction:column;align-items:center">
+<div style="position:relative"><span style="position:absolute;inset:0;border-radius:11px;border:2px solid #E8833A;animation:cg-pulse 2.2s ease-out infinite"></span><div style="width:44px;height:44px;border-radius:12px;background:#fff;border:2.5px solid #E8833A;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 16px rgba(232,131,58,.32)"><svg width="23" height="23" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-car"/></svg></div></div>
+<div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #E8833A;margin-top:-1px"></div>
+</div>
+<div style="position:absolute;left:49%;top:25%;transform:translate(-50%,-100%);z-index:2;display:flex;flex-direction:column;align-items:center"><div style="width:40px;height:40px;border-radius:11px;background:#fff;border:2.5px solid #D9534F;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 13px rgba(20,24,32,.16)"><svg width="21" height="21" fill="none" stroke="#D9534F" stroke-width="2"><use href="#i-fire"/></svg></div><div style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid #D9534F"></div></div>
+<div style="position:absolute;left:63%;top:48%;transform:translate(-50%,-100%);z-index:2;display:flex;flex-direction:column;align-items:center"><div style="width:40px;height:40px;border-radius:11px;background:#fff;border:2.5px solid #3E7CB1;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 13px rgba(20,24,32,.16)"><svg width="21" height="21" fill="none" stroke="#3E7CB1" stroke-width="2"><use href="#i-ems"/></svg></div><div style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid #3E7CB1"></div></div>
+<div style="position:absolute;left:31%;top:64%;transform:translate(-50%,-100%);z-index:2;display:flex;flex-direction:column;align-items:center"><div style="width:40px;height:40px;border-radius:11px;background:#fff;border:2.5px solid #C9503E;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 13px rgba(20,24,32,.16)"><svg width="21" height="21" fill="none" stroke="#C9503E" stroke-width="2"><use href="#i-shield"/></svg></div><div style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid #C9503E"></div></div>
+<div style="position:absolute;left:79%;top:33%;transform:translate(-50%,-100%);z-index:2;display:flex;flex-direction:column;align-items:center"><div style="width:40px;height:40px;border-radius:11px;background:#fff;border:2.5px solid #E0A526;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 13px rgba(20,24,32,.16)"><svg width="21" height="21" fill="none" stroke="#E0A526" stroke-width="2"><use href="#i-alert"/></svg></div><div style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid #E0A526"></div></div>
+<div style="position:absolute;left:18px;bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#9aa6b4">© Mapbox · OpenStreetMap</div>
+</div>
+<!-- RIGHT: dossier -->
+<div style="background:#fff;border-left:1px solid #E6E9EF;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:18px 20px 0">
+<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#8A93A5;text-transform:uppercase">Event dossier · evt_456</span><svg width="16" height="16" fill="none" stroke="#B6BFCC" stroke-width="2"><use href="#i-x"/></svg></div>
+<div style="display:flex;align-items:flex-start;gap:13px;margin-top:14px">
+<div style="width:48px;height:48px;border-radius:12px;background:#FBEAD9;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="26" height="26" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-car"/></svg></div>
+<div style="flex:1"><div style="font-family:'Newsreader',serif;font-weight:500;font-size:23px;color:#14181F;line-height:1.1">Possible Vehicle Collision</div><div style="font-size:13px;color:#7d879b;margin-top:4px;display:flex;align-items:center;gap:5px"><svg width="13" height="13" fill="none" stroke="#9AA3B2" stroke-width="2"><use href="#i-pin"/></svg>I-71 North near 17th Ave</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:9px;margin-top:14px">
+<span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#B5791A;background:#F4EAD2;padding:5px 11px;border-radius:7px"><span style="width:6px;height:6px;border-radius:50%;background:#B5791A"></span>Reported</span>
+<span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8A93A5">1 SRC · 4 MIN AGO</span>
+</div>
+</div>
+<!-- confidence bar block -->
+<div style="margin:16px 20px 0;padding:16px;background:#0F1521;border-radius:12px;color:#fff">
+<div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#7d879b">CONFIDENCE</span><span style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:30px;color:#fff;line-height:1">81<span style="font-size:16px;color:#8A93A5">%</span></span></div>
+<div style="height:8px;background:#2A3346;border-radius:4px;margin-top:10px;overflow:hidden"><div style="width:81%;height:100%;background:linear-gradient(90deg,#E8833A,#F2A862);border-radius:4px"></div></div>
+<div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#5b677d;margin-top:6px"><span>UNVERIFIED</span><span>LIKELY</span><span>CONFIRMED</span></div>
+</div>
+<!-- factors -->
+<div style="padding:16px 20px 0;flex:1;overflow:hidden">
+<div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#8A93A5;text-transform:uppercase;margin-bottom:11px">Evidence breakdown</div>
+<sc-for list="{{ factors }}" as="f" hint-placeholder-count="4">
+<div style="margin-bottom:11px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px"><span style="font-size:13px;color:#3A4250;font-weight:500">{{ f.name }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7d879b">{{ f.val }}</span></div>
+<div style="height:5px;background:#EEF1F5;border-radius:3px;overflow:hidden"><div style="width:{{ f.pct }}%;height:100%;background:#2F6BD6;border-radius:3px"></div></div>
+</div>
+</sc-for>
+</div>
+<div style="padding:14px 20px;border-top:1px solid #EEF1F5;display:flex;gap:9px">
+<button style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px;background:#14181F;color:#fff;border:none;border-radius:9px;font-family:'Spline Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer"><svg width="14" height="14" fill="none" stroke="#fff" stroke-width="2"><use href="#i-clock"/></svg>Timeline</button>
+<button style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px;background:#F2F4F7;color:#3A4250;border:1px solid #E6E9EF;border-radius:9px;font-family:'Spline Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer"><svg width="14" height="14" fill="none" stroke="#2F6BD6" stroke-width="2"><use href="#i-info"/></svg>Explain</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ============ FRAME : FILTERS IN ACTION ============ -->
+<div style="position:absolute;left:0;top:1120px;width:920px">
+<div data-drags-parent="1" style="display:flex;align-items:center;gap:10px;margin:0 0 16px 6px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.04em;color:#5b5346;font-weight:500"><span style="width:9px;height:9px;border-radius:50%;background:#C9503E"></span>STATE · FILTERS IN ACTION — &ldquo;Police&rdquo; selected</div>
+<div style="background:#F6F1E9;border-radius:14px;box-shadow:0 24px 60px rgba(40,30,18,.18);overflow:hidden;font-family:'Hanken Grotesk',sans-serif">
+<div style="display:flex;align-items:center;gap:12px;padding:14px 22px;border-bottom:1px solid #EBE3D6;background:#fff">
+<span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a89e8d">Filters</span>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:#fff;border:1px solid #E8E0D2;color:#8a8070;border-radius:9px;font-size:13px;font-weight:500"><svg width="14" height="14" fill="none" stroke="#b6ac9c" stroke-width="2"><use href="#i-layers"/></svg>All</div>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:#fff;border:1px solid #E8E0D2;color:#8a8070;border-radius:9px;font-size:13px;font-weight:500"><svg width="14" height="14" fill="none" stroke="#b6ac9c" stroke-width="2"><use href="#i-share"/></svg>Major</div>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:#C9503E;color:#fff;border-radius:9px;font-size:13px;font-weight:600;box-shadow:0 4px 12px rgba(201,80,62,.3)"><svg width="14" height="14" fill="none" stroke="#fff" stroke-width="2"><use href="#i-shield"/></svg>Police<svg width="13" height="13" fill="none" stroke="#fff" stroke-width="2.4" style="margin-left:1px"><use href="#i-x"/></svg></div>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:#fff;border:1px solid #E8E0D2;color:#8a8070;border-radius:9px;font-size:13px;font-weight:500"><svg width="14" height="14" fill="none" stroke="#b6ac9c" stroke-width="2"><use href="#i-fire"/></svg>Fire</div>
+<div style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:#fff;border:1px solid #E8E0D2;color:#8a8070;border-radius:9px;font-size:13px;font-weight:500"><svg width="14" height="14" fill="none" stroke="#b6ac9c" stroke-width="2"><use href="#i-ems"/></svg>EMS</div>
+<div style="flex:1"></div>
+<span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#C9503E;font-weight:600">2 police events</span>
+</div>
+<div style="position:relative;height:480px;overflow:hidden;background:#ECE6DB">
+<div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 43px,#FBFAF6 43px 45px),repeating-linear-gradient(90deg,transparent 0 54px,#FBFAF6 54px 56px);opacity:.85"></div>
+<div style="position:absolute;left:-40px;top:230px;width:1000px;height:11px;background:#F2B27C;transform:rotate(-7deg);border-radius:6px"></div>
+<div style="position:absolute;left:300px;top:-60px;width:11px;height:800px;background:#F2B27C;transform:rotate(9deg);border-radius:6px"></div>
+<div style="position:absolute;left:34%;top:-40px;width:40px;height:700px;background:#C7D8E6;transform:rotate(14deg);border-radius:30px;opacity:.85"></div>
+<div style="position:absolute;left:38%;top:48%;transform:translate(-50%,-50%);font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:30px;color:#B7AD98">Columbus</div>
+<!-- faded non-police -->
+<div style="position:absolute;left:48%;top:26%;transform:translate(-50%,-100%);opacity:.22"><div style="width:38px;height:38px;border-radius:50%;background:#fff;border:2.5px solid #D9534F;display:flex;align-items:center;justify-content:center"><svg width="19" height="19" fill="none" stroke="#D9534F" stroke-width="2"><use href="#i-fire"/></svg></div></div>
+<div style="position:absolute;left:64%;top:50%;transform:translate(-50%,-100%);opacity:.22"><div style="width:38px;height:38px;border-radius:50%;background:#fff;border:2.5px solid #3E7CB1;display:flex;align-items:center;justify-content:center"><svg width="19" height="19" fill="none" stroke="#3E7CB1" stroke-width="2"><use href="#i-ems"/></svg></div></div>
+<div style="position:absolute;left:79%;top:33%;transform:translate(-50%,-100%);opacity:.22"><div style="width:38px;height:38px;border-radius:50%;background:#fff;border:2.5px solid #E0A526;display:flex;align-items:center;justify-content:center"><svg width="19" height="19" fill="none" stroke="#E0A526" stroke-width="2"><use href="#i-alert"/></svg></div></div>
+<!-- police pins emphasised -->
+<div style="position:absolute;left:30%;top:60%;transform:translate(-50%,-100%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="position:relative"><span style="position:absolute;inset:0;border-radius:50%;border:3px solid #C9503E;animation:cg-pulse 2.2s ease-out infinite"></span><div style="width:50px;height:50px;border-radius:50%;background:#fff;border:3px solid #C9503E;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(201,80,62,.35)"><svg width="25" height="25" fill="none" stroke="#C9503E" stroke-width="2"><use href="#i-shield"/></svg></div></div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#B5791A;background:#fff;padding:2px 7px;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,.12)">REPORTED</span></div>
+<div style="position:absolute;left:56%;top:72%;transform:translate(-50%,-100%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid #C9503E;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.18)"><svg width="23" height="23" fill="none" stroke="#C9503E" stroke-width="2"><use href="#i-shield"/></svg></div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#356C9B;background:#fff;padding:2px 7px;border-radius:6px;box-shadow:0 2px 5px rgba(0,0,0,.12)">CORROBORATED</span></div>
+<!-- filter toast -->
+<div style="position:absolute;left:50%;top:18px;transform:translateX(-50%);display:flex;align-items:center;gap:9px;background:#2A2419;color:#fff;padding:9px 16px;border-radius:30px;box-shadow:0 8px 22px rgba(0,0,0,.25);font-size:13px"><svg width="15" height="15" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-eye"/></svg>Showing <strong>Police</strong> only · 4 events hidden<span style="color:#E8833A;font-weight:600;cursor:pointer;margin-left:4px">Clear</span></div>
+</div>
+</div>
+</div>
+
+<!-- ============ FRAME : MY AREA ============ -->
+<div style="position:absolute;left:980px;top:1120px;width:1000px">
+<div data-drags-parent="1" style="display:flex;align-items:center;gap:10px;margin:0 0 16px 6px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.04em;color:#5b5346;font-weight:500"><span style="width:9px;height:9px;border-radius:50%;background:#3F8F5B"></span>SCREEN · MY AREA — Personalized neighborhood view</div>
+<div style="background:#F6F1E9;border-radius:14px;box-shadow:0 24px 60px rgba(40,30,18,.18);overflow:hidden;font-family:'Hanken Grotesk',sans-serif">
+<div style="display:flex;align-items:center;gap:14px;padding:18px 26px;background:#fff;border-bottom:1px solid #EBE3D6">
+<svg width="22" height="22" fill="none" stroke="#3F8F5B" stroke-width="2"><use href="#i-home"/></svg>
+<div style="flex:1"><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;color:#2A2419;letter-spacing:-.01em">Short North</div><div style="font-size:13px;color:#8a8070;display:flex;align-items:center;gap:5px;margin-top:1px"><svg width="12" height="12" fill="none" stroke="#b0a594" stroke-width="2"><use href="#i-pin"/></svg>Your watched area · 1.2 mi radius</div></div>
+<div style="display:flex;align-items:center;gap:7px;padding:9px 14px;background:#fff;border:1px solid #E8E0D2;border-radius:10px;font-size:13px;color:#5b5346;font-weight:500"><svg width="15" height="15" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-bell"/></svg>Alerts on</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;padding:20px 26px 6px">
+<div style="background:#fff;border:1px solid #EEE6D8;border-radius:13px;padding:16px"><div style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:#E0A526"></span><span style="font-size:13px;color:#8a8070;font-weight:500">Area status</span></div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:24px;color:#2A2419;margin-top:8px">Moderate</div><div style="font-size:12.5px;color:#a89e8d;margin-top:2px">2 active events nearby</div></div>
+<div style="background:#fff;border:1px solid #EEE6D8;border-radius:13px;padding:16px"><div style="display:flex;align-items:center;gap:8px"><svg width="15" height="15" fill="none" stroke="#3E7CB1" stroke-width="2"><use href="#i-activity"/></svg><span style="font-size:13px;color:#8a8070;font-weight:500">Last 24 hours</span></div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:24px;color:#2A2419;margin-top:8px">7 events</div><div style="font-size:12.5px;color:#a89e8d;margin-top:2px">Mostly traffic & EMS</div></div>
+<div style="background:#fff;border:1px solid #EEE6D8;border-radius:13px;padding:16px"><div style="display:flex;align-items:center;gap:8px"><svg width="15" height="15" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-clock"/></svg><span style="font-size:13px;color:#8a8070;font-weight:500">Avg. detect time</span></div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:24px;color:#2A2419;margin-top:8px">38 sec</div><div style="font-size:12.5px;color:#a89e8d;margin-top:2px">Signal → mapped event</div></div>
+</div>
+<div style="padding:14px 26px 24px">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a89e8d">Nearby right now</span><span style="font-size:12.5px;color:#E8833A;font-weight:600;display:flex;align-items:center;gap:4px">View on map<svg width="13" height="13" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-chev-r"/></svg></span></div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #EEE6D8;border-radius:13px;padding:14px 16px">
+<div style="width:42px;height:42px;border-radius:11px;background:#FBEAD9;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="22" height="22" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-car"/></svg></div>
+<div style="flex:1"><div style="font-weight:600;font-size:15px;color:#2A2419">Possible Vehicle Collision</div><div style="font-size:12.5px;color:#8a8070;margin-top:1px">I-71 North near 17th Ave · 0.4 mi away</div></div>
+<span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#B5791A;background:#F4EAD2;padding:4px 10px;border-radius:6px">Reported</span>
+<span style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:15px;color:#2A2419;width:42px;text-align:right">81%</span>
+</div>
+<div style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #EEE6D8;border-radius:13px;padding:14px 16px">
+<div style="width:42px;height:42px;border-radius:11px;background:#F7E2E1;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="22" height="22" fill="none" stroke="#D9534F" stroke-width="2"><use href="#i-fire"/></svg></div>
+<div style="flex:1"><div style="font-weight:600;font-size:15px;color:#2A2419">Structure Fire</div><div style="font-size:12.5px;color:#8a8070;margin-top:1px">High St near W 5th Ave · 0.9 mi away</div></div>
+<span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#356C9B;background:#DEEAF3;padding:4px 10px;border-radius:6px">Corroborated</span>
+<span style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:15px;color:#2A2419;width:42px;text-align:right">74%</span>
+</div>
+<div style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #EEE6D8;border-radius:13px;padding:14px 16px;opacity:.72">
+<div style="width:42px;height:42px;border-radius:11px;background:#EAEDF0;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="22" height="22" fill="none" stroke="#7B8794" stroke-width="2"><use href="#i-car"/></svg></div>
+<div style="flex:1"><div style="font-weight:600;font-size:15px;color:#2A2419">Minor Traffic Collision</div><div style="font-size:12.5px;color:#8a8070;margin-top:1px">S High St, German Village · 1.1 mi away</div></div>
+<span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#6B7682;background:#E7EAED;padding:4px 10px;border-radius:6px">Resolved</span>
+<span style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:15px;color:#2A2419;width:42px;text-align:right">88%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ============ FRAME : CONFIDENCE EXPLAINED ============ -->
+<div style="position:absolute;left:0;top:2160px;width:760px">
+<div data-drags-parent="1" style="display:flex;align-items:center;gap:10px;margin:0 0 16px 6px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.04em;color:#5b5346;font-weight:500"><span style="width:9px;height:9px;border-radius:50%;background:#356C9B"></span>PANEL · CONFIDENCE EXPLAINED</div>
+<div style="background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(40,30,18,.20);overflow:hidden;font-family:'Hanken Grotesk',sans-serif">
+<div style="padding:24px 26px 0;display:flex;align-items:flex-start;justify-content:space-between">
+<div style="display:flex;align-items:center;gap:13px"><div style="width:46px;height:46px;border-radius:12px;background:#E2ECF4;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" fill="none" stroke="#356C9B" stroke-width="2"><use href="#i-sparkles"/></svg></div><div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:21px;color:#2A2419">How we calculate confidence</div><div style="font-size:13px;color:#8a8070;margin-top:2px">Event evt_456 · Possible Vehicle Collision</div></div></div>
+<svg width="18" height="18" fill="none" stroke="#c4baa8" stroke-width="2"><use href="#i-x"/></svg>
+</div>
+<!-- principle banner -->
+<div style="margin:18px 26px 0;padding:14px 16px;background:#FAF6EF;border:1px solid #EFE7D8;border-radius:12px;display:flex;gap:11px;align-items:flex-start"><svg width="18" height="18" fill="none" stroke="#E8833A" stroke-width="2" style="flex-shrink:0;margin-top:1px"><use href="#i-info"/></svg><div style="font-size:13.5px;color:#5b5346;line-height:1.5">CivicGrid <strong style="color:#2A2419">never presents uncertain information as fact.</strong> Confidence is a transparent estimate built from the signals below — not a verdict. <strong style="color:#2A2419">81% is an unverified estimate.</strong></div></div>
+<!-- factors -->
+<div style="padding:20px 26px 4px"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a89e8d;margin-bottom:14px">What goes into the score</div>
+<sc-for list="{{ factors }}" as="f" hint-placeholder-count="5">
+<div style="margin-bottom:15px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span style="font-size:14.5px;color:#2A2419;font-weight:600">{{ f.name }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#8a8070">{{ f.val }}</span></div>
+<div style="height:7px;background:#F0EADF;border-radius:4px;overflow:hidden"><div style="width:{{ f.pct }}%;height:100%;background:#E8833A;border-radius:4px"></div></div>
+<div style="font-size:12px;color:#a89e8d;margin-top:5px">{{ f.note }}</div>
+</div>
+</sc-for>
+</div>
+<!-- status model -->
+<div style="padding:6px 26px 24px;border-top:1px solid #EFE7D8;margin-top:6px"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a89e8d;margin:16px 0 12px">What the status means</div>
+<sc-for list="{{ statusModel }}" as="s" hint-placeholder-count="5">
+<div style="display:flex;align-items:flex-start;gap:11px;padding:9px 0;border-bottom:1px solid #F4EFE6">
+<span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;flex-shrink:0;width:140px;color:{{ s.c }};background:{{ s.bg }}"><span style="width:6px;height:6px;border-radius:50%;background:{{ s.c }}"></span>{{ s.label }}</span>
+<span style="font-size:13.5px;color:#5b5346;line-height:1.45;padding-top:3px">{{ s.desc }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<!-- ============ FRAME : EVENT TIMELINE ============ -->
+<div style="position:absolute;left:820px;top:2160px;width:600px">
+<div data-drags-parent="1" style="display:flex;align-items:center;gap:10px;margin:0 0 16px 6px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.04em;color:#5b5346;font-weight:500"><span style="width:9px;height:9px;border-radius:50%;background:#B5791A"></span>PANEL · EVENT TIMELINE — Status evolution</div>
+<div style="background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(40,30,18,.20);overflow:hidden;font-family:'Hanken Grotesk',sans-serif">
+<div style="padding:22px 24px;border-bottom:1px solid #EFE7D8">
+<div style="display:flex;align-items:center;justify-content:space-between"><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:19px;color:#2A2419">Possible Vehicle Collision</div><svg width="18" height="18" fill="none" stroke="#c4baa8" stroke-width="2"><use href="#i-x"/></svg></div>
+<div style="font-size:13px;color:#8a8070;margin-top:3px">How this event evolved as signals arrived</div>
+<!-- status progress track -->
+<div style="display:flex;align-items:center;gap:0;margin-top:16px">
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:13px;height:13px;border-radius:50%;background:#B5791A"></div><span style="font-size:10.5px;color:#B5791A;font-weight:600">Reported</span></div>
+<div style="flex:1;height:3px;background:linear-gradient(90deg,#B5791A,#356C9B);margin:0 4px;margin-bottom:18px"></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:13px;height:13px;border-radius:50%;background:#356C9B"></div><span style="font-size:10.5px;color:#356C9B;font-weight:600">Corroborated</span></div>
+<div style="flex:1;height:3px;background:#EAE3D6;margin:0 4px;margin-bottom:18px"></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:13px;height:13px;border-radius:50%;background:#fff;border:2px solid #DCD3C4"></div><span style="font-size:10.5px;color:#b0a594;font-weight:600">Confirmed</span></div>
+<div style="flex:1;height:3px;background:#EAE3D6;margin:0 4px;margin-bottom:18px"></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:13px;height:13px;border-radius:50%;background:#fff;border:2px solid #DCD3C4"></div><span style="font-size:10.5px;color:#b0a594;font-weight:600">Resolved</span></div>
+</div>
+</div>
+<div style="padding:20px 24px 24px">
+<sc-for list="{{ timeline }}" as="t" hint-placeholder-count="4">
+<div style="display:flex;gap:14px">
+<div style="display:flex;flex-direction:column;align-items:center"><span style="width:11px;height:11px;border-radius:50%;background:{{ t.tc }};flex-shrink:0;margin-top:4px;box-shadow:0 0 0 4px {{ t.tbg }}"></span><span style="flex:1;width:2px;background:#EFE7D8;margin:4px 0"></span></div>
+<div style="flex:1;padding-bottom:18px">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:5px"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#8a8070;font-weight:500">{{ t.time }}</span><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;color:{{ t.tc }};background:{{ t.tbg }}">{{ t.tlabel }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#b0a594;margin-left:auto">{{ t.src }}</span></div>
+<div style="font-size:14.5px;font-weight:600;color:#2A2419;line-height:1.25">{{ t.head }}</div>
+<div style="font-size:13px;color:#8a8070;line-height:1.45;margin-top:3px">{{ t.body }}</div>
+</div>
+</div>
+</sc-for>
+<div style="display:flex;align-items:center;gap:9px;padding:12px 14px;background:#FAF6EF;border:1px dashed #E2DACB;border-radius:11px;font-size:12.5px;color:#a89e8d"><svg width="15" height="15" fill="none" stroke="#b0a594" stroke-width="2"><use href="#i-radio"/></svg>Monitoring for further signals — status updates automatically.</div>
+</div>
+</div>
+</div>
+
+<!-- ============ FRAME : SYSTEM REFERENCE ============ -->
+<div style="position:absolute;left:1500px;top:2160px;width:560px">
+<div data-drags-parent="1" style="display:flex;align-items:center;gap:10px;margin:0 0 16px 6px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.04em;color:#5b5346;font-weight:500"><span style="width:9px;height:9px;border-radius:50%;background:#2A2419"></span>SYSTEM · Status model, categories &amp; type</div>
+<div style="background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(40,30,18,.20);overflow:hidden;font-family:'Hanken Grotesk',sans-serif;padding:24px 26px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a89e8d;margin-bottom:13px">Event categories</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px">
+<div style="display:flex;align-items:center;gap:9px;padding:10px 12px;background:#FBEAD9;border-radius:10px"><svg width="19" height="19" fill="none" stroke="#E8833A" stroke-width="2"><use href="#i-car"/></svg><span style="font-size:13px;color:#5b5346;font-weight:500">Traffic / Collision</span></div>
+<div style="display:flex;align-items:center;gap:9px;padding:10px 12px;background:#F7E2E1;border-radius:10px"><svg width="19" height="19" fill="none" stroke="#D9534F" stroke-width="2"><use href="#i-fire"/></svg><span style="font-size:13px;color:#5b5346;font-weight:500">Fire</span></div>
+<div style="display:flex;align-items:center;gap:9px;padding:10px 12px;background:#E2ECF4;border-radius:10px"><svg width="19" height="19" fill="none" stroke="#3E7CB1" stroke-width="2"><use href="#i-ems"/></svg><span style="font-size:13px;color:#5b5346;font-weight:500">EMS / Medical</span></div>
+<div style="display:flex;align-items:center;gap:9px;padding:10px 12px;background:#F6E3DF;border-radius:10px"><svg width="19" height="19" fill="none" stroke="#C9503E" stroke-width="2"><use href="#i-shield"/></svg><span style="font-size:13px;color:#5b5346;font-weight:500">Police</span></div>
+<div style="display:flex;align-items:center;gap:9px;padding:10px 12px;background:#F8EFD6;border-radius:10px"><svg width="19" height="19" fill="none" stroke="#E0A526" stroke-width="2"><use href="#i-alert"/></svg><span style="font-size:13px;color:#5b5346;font-weight:500">Hazard</span></div>
+<div style="display:flex;align-items:center;gap:9px;padding:10px 12px;background:#EAEDF0;border-radius:10px"><svg width="19" height="19" fill="none" stroke="#7B8794" stroke-width="2"><use href="#i-pin"/></svg><span style="font-size:13px;color:#5b5346;font-weight:500">Other / civic</span></div>
+</div>
+<div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a89e8d;margin-bottom:13px">Status ladder</div>
+<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px">
+<sc-for list="{{ statusModel }}" as="s" hint-placeholder-count="5"><span style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:8px;align-self:flex-start;color:{{ s.c }};background:{{ s.bg }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ s.c }}"></span>{{ s.label }}</span></sc-for>
+</div>
+<div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#a89e8d;margin-bottom:13px">Typography</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;color:#2A2419">Bricolage Grotesque</div>
+<div style="font-size:11px;color:#a89e8d;margin-bottom:6px">Headlines · Direction A</div>
+<div style="font-family:'Newsreader',serif;font-weight:500;font-size:24px;color:#2A2419">Newsreader Display</div>
+<div style="font-size:11px;color:#a89e8d;margin-bottom:6px">Event titles · Direction B</div>
+<div style="font-family:'Hanken Grotesk',sans-serif;font-size:16px;color:#2A2419">Hanken Grotesk — interface &amp; body copy</div>
+<div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#2A2419;margin-top:4px">JetBrains Mono — data · 81% · evt_456</div>
+</div>
+</div>
+</div></x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const half = Math.PI * 40;
+    const S = {
+      reported:       { label: 'Reported',        c: '#B5791A', bg: '#F4EAD2' },
+      corroborated:   { label: 'Corroborated',    c: '#356C9B', bg: '#DEEAF3' },
+      confirmed:      { label: 'Confirmed',        c: '#3F8F5B', bg: '#DDEEE3' },
+      resolved:       { label: 'Resolved',         c: '#6B7682', bg: '#E7EAED' },
+      unsubstantiated:{ label: 'Unsubstantiated',  c: '#9A5A4C', bg: '#F0E3DF' },
+    };
+    const raw = [
+      { id:'evt_456', iconHref:'#i-car',   title:'Possible Vehicle Collision', loc:'I-71 North near 17th Ave', status:'reported',     confidence:0.81, sources:1, ago:'4m',  color:'#E8833A', tint:'#FBEAD9', spark:'0,15 20,11 40,13 60,7 80,10 100,4 120,8' },
+      { id:'evt_201', iconHref:'#i-fire',  title:'Structure Fire',             loc:'High St near W 5th Ave',  status:'corroborated', confidence:0.74, sources:3, ago:'8m',  color:'#D9534F', tint:'#F7E2E1', spark:'0,12 20,9 40,13 60,6 80,11 100,5 120,7' },
+      { id:'evt_388', iconHref:'#i-ems',   title:'Medical Response',           loc:'Broad & High',           status:'reported',     confidence:0.72, sources:1, ago:'6m',  color:'#3E7CB1', tint:'#E2ECF4', spark:'0,10 20,12 40,8 60,11 80,6 100,9 120,7' },
+      { id:'evt_412', iconHref:'#i-shield',title:'Disturbance Reported',       loc:'Neil Ave near King Ave', status:'reported',     confidence:0.66, sources:1, ago:'11m', color:'#C9503E', tint:'#F6E3DF', spark:'0,13 20,10 40,12 60,9 80,12 100,8 120,10' },
+      { id:'evt_507', iconHref:'#i-alert', title:'Roadway Hazard',             loc:'I-670 EB near Leonard',   status:'corroborated', confidence:0.69, sources:2, ago:'14m', color:'#E0A526', tint:'#F8EFD6', spark:'0,11 20,8 40,12 60,7 80,10 100,6 120,9' },
+      { id:'evt_233', iconHref:'#i-car',   title:'Minor Traffic Collision',    loc:'S High St, German Village', status:'resolved',  confidence:0.88, sources:2, ago:'22m', color:'#7B8794', tint:'#EAEDF0', spark:'0,9 20,8 40,7 60,8 80,6 100,7 120,5' },
+    ];
+    const events = raw.map(e => {
+      const st = S[e.status];
+      return { ...e, pct: Math.round(e.confidence*100)+'%', dash:(e.confidence*half).toFixed(1)+' 1000',
+        statusLabel: st.label, statusC: st.c, statusBg: st.bg };
+    });
+
+    const TL = [
+      { time:'2:39 PM', status:'corroborated', head:'EMS dispatch referenced in area',        body:'A third independent signal references the same corridor. Confidence rising.', src:'3 sources' },
+      { time:'2:36 PM', status:'corroborated', head:'Second signal matches location',          body:'An independent transmission references I-71 NB near 17th. Locations agree.',  src:'2 sources' },
+      { time:'2:34 PM', status:'reported',     head:'Unit referenced location; speeds estimated', body:'Follow-up references lane blockage. Estimated and unverified.',            src:'1 source'  },
+      { time:'2:32 PM', status:'reported',     head:'First reference detected',                body:'Possible multi-vehicle collision, I-71 North near 17th Ave.',               src:'1 source'  },
+    ];
+    const timeline = TL.map(t => { const st = S[t.status]; return { ...t, tc: st.c, tbg: st.bg, tlabel: st.label }; });
+
+    const factors = [
+      { name:'Independent sources', val:'1 source',     pct:35, note:'A single signal lowers confidence.' },
+      { name:'Signal clarity',      val:'High',         pct:82, note:'Transcription was clear.' },
+      { name:'Corroboration',       val:'Partial',      pct:48, note:'Some agreement across signals.' },
+      { name:'Location specificity',val:'Street-level', pct:74, note:'Named cross-street referenced.' },
+      { name:'Recency',             val:'4 min ago',    pct:88, note:'Recent signals weigh more.' },
+    ];
+
+    const statusModel = [
+      { ...S.reported,       desc:'One source suggests the event may be happening.' },
+      { ...S.corroborated,   desc:'Multiple independent signals support the event.' },
+      { ...S.confirmed,      desc:'Official confirmation or highly reliable evidence.' },
+      { ...S.resolved,       desc:'The event appears to have concluded.' },
+      { ...S.unsubstantiated,desc:'Initial signal was weak, contradictory, or unsupported.' },
+    ];
+
+    return { events, hero: events[0], timeline, factors, statusModel };
+  }
+}
+</script>
+</body>
+</html>

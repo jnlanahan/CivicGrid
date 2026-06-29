@@ -1,0 +1,165 @@
+{
+  "_comment": "Dummy data for the CivicGrid clickable prototype. Drop into the app and render directly — no backend required. Status/category/color derivations are described in README.md > Design Tokens.",
+
+  "statusModel": [
+    { "key": "reported",        "label": "Reported",        "color": "#B5791A", "bg": "#F4EAD2", "desc": "One source suggests the event may be happening." },
+    { "key": "corroborated",    "label": "Corroborated",    "color": "#356C9B", "bg": "#DEEAF3", "desc": "Multiple independent signals support the event." },
+    { "key": "confirmed",       "label": "Confirmed",       "color": "#3F8F5B", "bg": "#DDEEE3", "desc": "Official confirmation or highly reliable evidence." },
+    { "key": "resolved",        "label": "Resolved",        "color": "#6B7682", "bg": "#E7EAED", "desc": "The event appears to have concluded." },
+    { "key": "unsubstantiated", "label": "Unsubstantiated", "color": "#9A5A4C", "bg": "#F0E3DF", "desc": "Initial signal was weak, contradictory, or unsupported." }
+  ],
+
+  "categories": [
+    { "key": "vehicle_accident", "label": "Traffic / Collision", "icon": "car",    "color": "#E8833A", "tint": "#FBEAD9" },
+    { "key": "fire",             "label": "Fire",                "icon": "flame",  "color": "#D9534F", "tint": "#F7E2E1" },
+    { "key": "ems",              "label": "EMS / Medical",       "icon": "cross",  "color": "#3E7CB1", "tint": "#E2ECF4" },
+    { "key": "police",           "label": "Police",              "icon": "shield", "color": "#C9503E", "tint": "#F6E3DF" },
+    { "key": "hazard",           "label": "Hazard",              "icon": "alert",  "color": "#E0A526", "tint": "#F8EFD6" },
+    { "key": "civic",            "label": "Other / civic",       "icon": "pin",    "color": "#7B8794", "tint": "#EAEDF0" }
+  ],
+
+  "filters": [
+    { "key": "all",      "label": "All events" },
+    { "key": "major",    "label": "Major incidents" },
+    { "key": "police",   "label": "Police" },
+    { "key": "fire",     "label": "Fire" },
+    { "key": "ems",      "label": "EMS" },
+    { "key": "hazard",   "label": "Hazards" }
+  ],
+
+  "events": [
+    {
+      "id": "evt_456",
+      "title": "Possible Vehicle Collision",
+      "event_type": "vehicle_accident",
+      "category": "vehicle_accident",
+      "status": "reported",
+      "confidence": 0.81,
+      "source_count": 1,
+      "location_label": "I-71 North near 17th Ave",
+      "neighborhood": "Italian Village",
+      "detected_ago": "4m",
+      "coord": { "lat": 39.985, "lng": -82.997 },
+      "map_pos_pct": { "x": 48, "y": 24 },
+      "signal_trend": "rising",
+      "is_major": true
+    },
+    {
+      "id": "evt_201",
+      "title": "Structure Fire",
+      "event_type": "fire",
+      "category": "fire",
+      "status": "corroborated",
+      "confidence": 0.74,
+      "source_count": 3,
+      "location_label": "High St near W 5th Ave",
+      "neighborhood": "Short North",
+      "detected_ago": "8m",
+      "coord": { "lat": 39.991, "lng": -83.003 },
+      "map_pos_pct": { "x": 30, "y": 62 },
+      "signal_trend": "steady",
+      "is_major": true
+    },
+    {
+      "id": "evt_388",
+      "title": "Medical Response",
+      "event_type": "ems",
+      "category": "ems",
+      "status": "reported",
+      "confidence": 0.72,
+      "source_count": 1,
+      "location_label": "Broad & High",
+      "neighborhood": "Downtown",
+      "detected_ago": "6m",
+      "coord": { "lat": 39.961, "lng": -82.999 },
+      "map_pos_pct": { "x": 62, "y": 46 },
+      "signal_trend": "steady",
+      "is_major": false
+    },
+    {
+      "id": "evt_412",
+      "title": "Disturbance Reported",
+      "event_type": "police",
+      "category": "police",
+      "status": "reported",
+      "confidence": 0.66,
+      "source_count": 1,
+      "location_label": "Neil Ave near King Ave",
+      "neighborhood": "Victorian Village",
+      "detected_ago": "11m",
+      "coord": { "lat": 39.995, "lng": -83.012 },
+      "map_pos_pct": { "x": 24, "y": 30 },
+      "signal_trend": "steady",
+      "is_major": false
+    },
+    {
+      "id": "evt_507",
+      "title": "Roadway Hazard",
+      "event_type": "hazard",
+      "category": "hazard",
+      "status": "corroborated",
+      "confidence": 0.69,
+      "source_count": 2,
+      "location_label": "I-670 EB near Leonard",
+      "neighborhood": "Milo-Grogan",
+      "detected_ago": "14m",
+      "coord": { "lat": 39.978, "lng": -82.985 },
+      "map_pos_pct": { "x": 78, "y": 32 },
+      "signal_trend": "steady",
+      "is_major": false
+    },
+    {
+      "id": "evt_233",
+      "title": "Minor Traffic Collision",
+      "event_type": "vehicle_accident",
+      "category": "vehicle_accident",
+      "status": "resolved",
+      "confidence": 0.88,
+      "source_count": 2,
+      "location_label": "S High St, German Village",
+      "neighborhood": "German Village",
+      "detected_ago": "22m",
+      "coord": { "lat": 39.945, "lng": -82.998 },
+      "map_pos_pct": { "x": 52, "y": 74 },
+      "signal_trend": "falling",
+      "is_major": false
+    }
+  ],
+
+  "confidenceFactors": {
+    "_for_event": "evt_456",
+    "factors": [
+      { "name": "Independent sources", "value": "1 source",     "pct": 35, "note": "A single signal lowers confidence." },
+      { "name": "Signal clarity",      "value": "High",         "pct": 82, "note": "Transcription was clear." },
+      { "name": "Corroboration",       "value": "Partial",      "pct": 48, "note": "Some agreement across signals." },
+      { "name": "Location specificity","value": "Street-level", "pct": 74, "note": "Named cross-street referenced." },
+      { "name": "Recency",             "value": "4 min ago",    "pct": 88, "note": "Recent signals weigh more." }
+    ]
+  },
+
+  "timeline": {
+    "_for_event": "evt_456",
+    "entries": [
+      { "time": "2:39 PM", "status": "corroborated", "head": "EMS dispatch referenced in area",          "body": "A third independent signal references the same corridor. Confidence rising.", "sources": "3 sources" },
+      { "time": "2:36 PM", "status": "corroborated", "head": "Second signal matches location",            "body": "An independent transmission references I-71 NB near 17th. Locations agree.",  "sources": "2 sources" },
+      { "time": "2:34 PM", "status": "reported",     "head": "Unit referenced location; speeds estimated","body": "Follow-up references lane blockage. Estimated and unverified.",              "sources": "1 source" },
+      { "time": "2:32 PM", "status": "reported",     "head": "First reference detected",                  "body": "Possible multi-vehicle collision, I-71 North near 17th Ave.",                "sources": "1 source" }
+    ]
+  },
+
+  "myArea": {
+    "name": "Short North",
+    "radius_mi": 1.2,
+    "alerts_on": true,
+    "stats": [
+      { "label": "Area status",     "value": "Moderate", "sub": "2 active events nearby", "tone": "hazard" },
+      { "label": "Last 24 hours",   "value": "7 events", "sub": "Mostly traffic & EMS",   "tone": "ems" },
+      { "label": "Avg. detect time","value": "38 sec",   "sub": "Signal \u2192 mapped event", "tone": "accent" }
+    ],
+    "nearby": [
+      { "id": "evt_456", "title": "Possible Vehicle Collision", "category": "vehicle_accident", "status": "reported",     "distance_mi": 0.4, "location_label": "I-71 North near 17th Ave",  "confidence": 0.81 },
+      { "id": "evt_201", "title": "Structure Fire",             "category": "fire",             "status": "corroborated", "distance_mi": 0.9, "location_label": "High St near W 5th Ave",   "confidence": 0.74 },
+      { "id": "evt_233", "title": "Minor Traffic Collision",    "category": "vehicle_accident", "status": "resolved",     "distance_mi": 1.1, "location_label": "S High St, German Village","confidence": 0.88 }
+    ]
+  }
+}
