@@ -10,7 +10,7 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { events, filters, getCategory, matchesFilter } from "@/lib/data";
+import { filters, getCategory, matchesFilter } from "@/lib/data";
 import { useApp } from "@/lib/store";
 import type { CategoryKey, FilterKey } from "@/lib/types";
 
@@ -31,7 +31,7 @@ function filterColor(key: FilterKey): string | null {
 }
 
 export function FilterBar() {
-  const { activeFilter, setFilter } = useApp();
+  const { activeFilter, setFilter, events } = useApp();
 
   const matchCount = events.filter((e) => matchesFilter(e, activeFilter)).length;
   const activeLabel = filters.find((f) => f.key === activeFilter)?.label ?? "";

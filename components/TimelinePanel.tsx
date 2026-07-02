@@ -1,20 +1,34 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { RadioTower, X } from "lucide-react";
-import { getEvent, getStatus, timeline } from "@/lib/data";
+import { getStatus } from "@/lib/data";
+import { getTimeline } from "@/lib/api";
 import { StatusChip } from "@/components/StatusChip";
 import { Modal } from "@/components/Modal";
 import { useApp } from "@/lib/store";
-import type { StatusKey } from "@/lib/types";
+import type { StatusKey, TimelineEntry } from "@/lib/types";
 
 const STEPS: StatusKey[] = ["reported", "corroborated", "confirmed", "resolved"];
 
 export function TimelinePanel() {
-  const { setPanel, selectedEventId } = useApp();
-  const event = getEvent(selectedEventId ?? "evt_456") ?? getEvent("evt_456")!;
+  const { setPanel, selectedEventId, getEventById } = useApp();
+  const event = getEventById(selectedEventId);
+
+  const [entries, setEntries] = useState<TimelineEntry[]>([]);
+  useEffect(() => {
+    if (!selectedEventId) return;
+    let cancelled = false;
+    getTimeline(selectedEventId)
+      .then((e) => !cancelled && setEntries(e))
+      .catch(() => !cancelled && setEntries([]));
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedEventId]);
 
   // Highest step the event has reached, derived from the timeline entries.
-  const reachedIndex = timeline.entries.reduce((max, e) => {
+  const reachedIndex = entries.reduce((max, e) => {
     const i = STEPS.indexOf(e.status);
     return i > max ? i : max;
   }, 0);
@@ -26,7 +40,7 @@ export function TimelinePanel() {
         <div className="flex items-start justify-between">
           <div>
             <h2 className="font-display text-[19px] font-semibold tracking-display text-ink">
-              {event.title}
+              {event?.title ?? "Event"}
             </h2>
             <p className="mt-0.5 text-[12.5px] text-text-muted">
               How this event evolved as signals arrived
@@ -90,9 +104,9 @@ export function TimelinePanel() {
 
         {/* Update list */}
         <div className="mt-6">
-          {timeline.entries.map((entry, i) => {
+          {entries.map((entry, i) => {
             const s = getStatus(entry.status);
-            const last = i === timeline.entries.length - 1;
+            const last = i === entries.length - 1;
             return (
               <div key={i} className="flex gap-3">
                 {/* dot + connector */}

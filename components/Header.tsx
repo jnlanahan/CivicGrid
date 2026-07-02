@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ChevronDown, Grid3x3, Home, Map as MapIcon, Search, User } from "lucide-react";
 import { useApp } from "@/lib/store";
 
@@ -65,6 +66,13 @@ export function Header() {
         </button>
         {accountOpen && (
           <div className="absolute right-0 top-[calc(100%+6px)] z-30 w-44 animate-fade-in rounded-card border border-border-warm-2 bg-white py-1.5 shadow-detail">
+            <Link
+              href="/console"
+              onClick={() => setAccountOpen(false)}
+              className="block w-full px-3.5 py-2 text-left text-[13px] font-medium text-ink hover:bg-surface-alt"
+            >
+              Signal Console
+            </Link>
             {["Watched areas", "Alert settings", "About CivicGrid"].map((item) => (
               <button
                 key={item}

@@ -1,10 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Activity, Bell, ChevronRight, Clock, Home } from "lucide-react";
-import { getCategory, myArea } from "@/lib/data";
+import { getCategory } from "@/lib/data";
+import { getMyArea } from "@/lib/api";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import { StatusChip } from "@/components/StatusChip";
 import { useApp } from "@/lib/store";
+import type { MyArea } from "@/lib/types";
 
 const TONE_COLOR: Record<string, string> = {
   hazard: "#E0A526",
@@ -14,6 +17,25 @@ const TONE_COLOR: Record<string, string> = {
 
 export function MyAreaView() {
   const { setView, selectEvent } = useApp();
+  const [myArea, setMyArea] = useState<MyArea | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    getMyArea()
+      .then((a) => !cancelled && setMyArea(a))
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!myArea) {
+    return (
+      <div className="mx-auto max-w-5xl px-5 py-6">
+        <div className="h-40 animate-pulse rounded-card border border-border-warm-3 bg-white" />
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-6">

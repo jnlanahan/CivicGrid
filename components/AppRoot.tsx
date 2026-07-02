@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AppProvider, useApp } from "@/lib/store";
+import { getEvents } from "@/lib/api";
 import { Header } from "@/components/Header";
 import { FilterBar } from "@/components/FilterBar";
 import { MapView } from "@/components/MapView";
@@ -12,14 +13,35 @@ import { LoadingSkeleton } from "@/components/LoadingSkeleton";
 import { ErrorBanner } from "@/components/ErrorBanner";
 
 function Shell() {
-  const { view, openPanel } = useApp();
+  const { view, openPanel, setEvents, selectEvent } = useApp();
   const [loading, setLoading] = useState(true);
   const [showError, setShowError] = useState(false);
 
-  // Simulate connecting to the live feed.
+  // Load the live feed on mount, then poll every 15s.
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 850);
-    return () => clearTimeout(t);
+    let cancelled = false;
+
+    async function load(initial: boolean) {
+      try {
+        const next = await getEvents();
+        if (cancelled) return;
+        setEvents(next);
+        setShowError(false);
+        if (initial && next.length > 0) selectEvent(next[0].id);
+      } catch {
+        if (!cancelled) setShowError(true);
+      } finally {
+        if (initial && !cancelled) setLoading(false);
+      }
+    }
+
+    load(true);
+    const timer = setInterval(() => load(false), 15000);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

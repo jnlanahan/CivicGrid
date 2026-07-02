@@ -4,7 +4,12 @@ import { getCategory, getStatus } from "@/lib/data";
 import { CategoryIcon } from "@/components/CategoryIcon";
 import type { CivicEvent } from "@/lib/types";
 
-export function Pin({
+/**
+ * Presentational pin badge — circle + category-colored border + icon + status chip
+ * (+ pulse ring when selected). It does NOT position itself; the caller (a Mapbox
+ * Marker or the fallback overlay) handles placement.
+ */
+export function PinBadge({
   event,
   selected,
   dimmed,
@@ -24,12 +29,12 @@ export function Pin({
 
   return (
     <button
-      onClick={onClick}
-      className="group absolute flex flex-col items-center transition-opacity duration-200"
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      className="group flex flex-col items-center transition-opacity duration-200"
       style={{
-        left: `${event.map_pos_pct.x}%`,
-        top: `${event.map_pos_pct.y}%`,
-        transform: "translate(-50%,-100%)",
         opacity: dimmed ? 0.22 : resolved ? 0.7 : 1,
         zIndex: selected ? 20 : 10,
       }}
@@ -39,11 +44,7 @@ export function Pin({
         {selected && !dimmed && (
           <span
             className="absolute left-1/2 top-1/2 animate-pulse-ring rounded-full"
-            style={{
-              width: size,
-              height: size,
-              border: `2px solid ${color}`,
-            }}
+            style={{ width: size, height: size, border: `2px solid ${color}` }}
           />
         )}
         <span

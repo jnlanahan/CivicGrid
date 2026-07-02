@@ -1,15 +1,30 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Info, Sparkles, X } from "lucide-react";
-import { confidenceFactors, getEvent, statusModel } from "@/lib/data";
+import { statusModel } from "@/lib/data";
+import { getConfidence } from "@/lib/api";
 import { StatusChip } from "@/components/StatusChip";
 import { Modal } from "@/components/Modal";
 import { useApp } from "@/lib/store";
+import type { ConfidenceFactor } from "@/lib/types";
 
 export function ConfidencePanel() {
-  const { setPanel, selectedEventId } = useApp();
-  const event = getEvent(selectedEventId ?? "evt_456") ?? getEvent("evt_456")!;
-  const pct = Math.round(event.confidence * 100);
+  const { setPanel, selectedEventId, getEventById } = useApp();
+  const event = getEventById(selectedEventId);
+  const pct = event ? Math.round(event.confidence * 100) : 0;
+
+  const [factors, setFactors] = useState<ConfidenceFactor[]>([]);
+  useEffect(() => {
+    if (!selectedEventId) return;
+    let cancelled = false;
+    getConfidence(selectedEventId)
+      .then((f) => !cancelled && setFactors(f))
+      .catch(() => !cancelled && setFactors([]));
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedEventId]);
 
   return (
     <Modal onClose={() => setPanel(null)} width={560}>
@@ -24,7 +39,7 @@ export function ConfidencePanel() {
               How we calculate confidence
             </h2>
             <p className="mt-0.5 font-mono text-[12px] text-text-muted">
-              {event.id} · {event.title}
+              {event ? `${event.id} · ${event.title}` : "Event"}
             </p>
           </div>
           <button
@@ -54,7 +69,7 @@ export function ConfidencePanel() {
           What goes into the score
         </h3>
         <div className="mt-3 space-y-3.5">
-          {confidenceFactors.factors.map((f) => (
+          {factors.map((f) => (
             <div key={f.name}>
               <div className="flex items-baseline justify-between">
                 <span className="font-sans text-[13.5px] font-semibold text-ink">{f.name}</span>
